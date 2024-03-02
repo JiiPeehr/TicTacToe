@@ -19,20 +19,26 @@ public class Ristinolla {
 
         while (true) {
 
-            System.out.print("Valitse ruutu (0-9): ");
+            System.out.print("Valitse ruutu (1-9): ");
             int pelaajanRuutu = s.nextInt();
             if (syoteOikein(pelaajanRuutu) && onkoTyhja(peliLauta, pelaajanRuutu)) {
                 asetaNappula(peliLauta, pelaajanRuutu, "pelaaja");
                 tyhjätRuudut--;
+                if (tyhjätRuudut == 0) {
+                    break;
+                }
             } else {
                 System.out.println("Syöte ei kelpaa");
                 continue;
             }
             while (true) {
-                int cpuRuutu = random.nextInt(10);
+                int cpuRuutu = random.nextInt(9) + 1;
                 if (onkoTyhja(peliLauta, cpuRuutu)) {
                     asetaNappula(peliLauta, cpuRuutu, "cpu");
                     tyhjätRuudut--;
+                    if (tyhjätRuudut == 0) {
+                        break;
+                    }
                     break;
                 } else {
                     continue;
@@ -140,7 +146,7 @@ public class Ristinolla {
     }
 
     public static boolean syoteOikein(int syote) {
-        return syote >= 0 && syote <= 9;
+        return syote > 0 && syote <= 9;
     }
 
     public static char voittajaSelvillä(char[][] peliLauta) {
