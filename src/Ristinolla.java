@@ -20,12 +20,22 @@ public class Ristinolla {
 
             System.out.print("Valitse ruutu (0-9): ");
             int pelaajanRuutu = s.nextInt();
+            if (syoteOikein(pelaajanRuutu) && onkoTyhja(peliLauta, pelaajanRuutu)) {
+                asetaNappula(peliLauta, pelaajanRuutu, "pelaaja");
+            } else {
+                System.out.println("Syöte ei kelpaa");
+                continue;
+            }
+            while (true) {
+                int cpuRuutu = random.nextInt(10);
+                if (onkoTyhja(peliLauta, cpuRuutu)) {
+                    asetaNappula(peliLauta, cpuRuutu, "cpu");
+                    break;
+                } else {
+                    continue;
+                }
 
-            asetaNappula(peliLauta, pelaajanRuutu, "pelaaja");
-
-            
-            int cpuRuutu = random.nextInt(9) + 1;
-            asetaNappula(peliLauta, cpuRuutu, "cpu");
+            }
             piirräLauta(peliLauta);
         }
 
@@ -80,6 +90,35 @@ public class Ristinolla {
                 break;
         }
 
+    }
+
+    public static boolean onkoTyhja(char[][] peliLauta, int ruutu) {
+        switch (ruutu) {
+            case 1:
+                return peliLauta[0][0] == ' ';
+            case 2:
+                return peliLauta[0][2] == ' ';
+            case 3:
+                return peliLauta[0][4] == ' ';
+            case 4:
+                return peliLauta[2][0] == ' ';
+            case 5:
+                return peliLauta[2][2] == ' ';
+            case 6:
+                return peliLauta[2][4] == ' ';
+            case 7:
+                return peliLauta[4][0] == ' ';
+            case 8:
+                return peliLauta[4][2] == ' ';
+            case 9:
+                return peliLauta[4][4] == ' ';
+            default:
+                return true;
+        }
+    }
+
+    public static boolean syoteOikein(int syote) {
+        return syote >= 0 && syote <= 9;
     }
 
 }
