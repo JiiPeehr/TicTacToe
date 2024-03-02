@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Ristinolla {
     public static void main(String[] args) throws Exception {
-
+        int tyhjätRuudut = 9;
         char[][] peliLauta = { { ' ', '|', ' ', '|', ' ' },
                 { '-', '+', '-', '+', '-' },
                 { ' ', '|', ' ', '|', ' ' },
@@ -15,6 +15,7 @@ public class Ristinolla {
 
         Scanner s = new Scanner(System.in);
         Random random = new Random();
+        String pelinVoitti = "";
 
         while (true) {
 
@@ -22,6 +23,7 @@ public class Ristinolla {
             int pelaajanRuutu = s.nextInt();
             if (syoteOikein(pelaajanRuutu) && onkoTyhja(peliLauta, pelaajanRuutu)) {
                 asetaNappula(peliLauta, pelaajanRuutu, "pelaaja");
+                tyhjätRuudut--;
             } else {
                 System.out.println("Syöte ei kelpaa");
                 continue;
@@ -30,6 +32,7 @@ public class Ristinolla {
                 int cpuRuutu = random.nextInt(10);
                 if (onkoTyhja(peliLauta, cpuRuutu)) {
                     asetaNappula(peliLauta, cpuRuutu, "cpu");
+                    tyhjätRuudut--;
                     break;
                 } else {
                     continue;
@@ -37,6 +40,25 @@ public class Ristinolla {
 
             }
             piirräLauta(peliLauta);
+            char voittaja = voittajaSelvillä(peliLauta);
+
+            if (voittaja == 'X') {
+                pelinVoitti = "pelaaja";
+                break;
+
+            } else if (voittaja == 'O') {
+                pelinVoitti = "tietokone";
+                break;
+            }
+            if (tyhjätRuudut == 0) {
+                break;
+            }
+        }
+
+        if (tyhjätRuudut == 0) {
+            System.out.println("Tasapeli");
+        } else {
+            System.out.println("Pelin voitti " + pelinVoitti);
         }
 
     }
@@ -121,4 +143,26 @@ public class Ristinolla {
         return syote >= 0 && syote <= 9;
     }
 
+    public static char voittajaSelvillä(char[][] peliLauta) {
+        char[] symbolit = { 'X', 'O' };
+        for (char symboli : symbolit) {
+            if (// vaakarivit
+            (peliLauta[0][0] == symboli && peliLauta[0][2] == symboli && peliLauta[0][4] == symboli)
+                    || (peliLauta[2][0] == symboli && peliLauta[2][2] == symboli && peliLauta[2][4] == symboli)
+                    || (peliLauta[4][0] == symboli && peliLauta[4][2] == symboli && peliLauta[4][4] == symboli)
+
+                    // pystyrivit
+                    || (peliLauta[0][0] == symboli && peliLauta[2][0] == symboli && peliLauta[4][0] == symboli)
+                    || (peliLauta[0][2] == symboli && peliLauta[2][2] == symboli && peliLauta[4][2] == symboli)
+                    || (peliLauta[0][4] == symboli && peliLauta[2][4] == symboli && peliLauta[4][4] == symboli)
+
+                    // ristikkäin
+                    || (peliLauta[0][0] == symboli && peliLauta[2][2] == symboli && peliLauta[4][4] == symboli)
+                    || (peliLauta[0][4] == symboli && peliLauta[2][2] == symboli && peliLauta[4][0] == symboli)) {
+                return symboli;
+            }
+
+        }
+        return ' ';
+    }
 }
