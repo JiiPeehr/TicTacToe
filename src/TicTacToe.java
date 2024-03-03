@@ -54,19 +54,19 @@ public class TicTacToe {
         char winner = weHaveAwinner(gameBoard);
 
         if (winner == 'X') {
-            System.out.println("*********************");
-            System.out.println("Player won!!");
-            System.out.println("*********************");
+            System.out.println("****************");
+            System.out.println("You won!!");
+            System.out.println("****************");
 
         } else if (winner == 'O') {
-            System.out.println("***********************");
+            System.out.println("*********************");
             System.out.println("Computer won!");
-            System.out.println("***********************");
+            System.out.println("*********************");
 
         } else {
-            System.out.println("*******************");
+            System.out.println("***************");
             System.out.println("Tie!");
-            System.out.println("*******************");
+            System.out.println("***************");
         }
         drawBoard(gameBoard);
 
