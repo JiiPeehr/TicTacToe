@@ -15,7 +15,6 @@ public class Ristinolla {
 
         Scanner s = new Scanner(System.in);
         Random random = new Random();
-        String pelinVoitti = "";
 
         while (true) {
 
@@ -27,6 +26,7 @@ public class Ristinolla {
                 if (tyhjätRuudut == 0) {
                     break;
                 }
+
             } else {
                 System.out.println("Syöte ei kelpaa");
                 continue;
@@ -36,36 +36,39 @@ public class Ristinolla {
                 if (onkoTyhja(peliLauta, cpuRuutu)) {
                     asetaNappula(peliLauta, cpuRuutu, "cpu");
                     tyhjätRuudut--;
-                    if (tyhjätRuudut == 0) {
-                        break;
-                    }
                     break;
                 } else {
                     continue;
                 }
 
             }
+
             piirräLauta(peliLauta);
-            char voittaja = voittajaSelvillä(peliLauta);
 
-            if (voittaja == 'X') {
-                pelinVoitti = "pelaaja";
-                break;
-
-            } else if (voittaja == 'O') {
-                pelinVoitti = "tietokone";
+            if (tyhjätRuudut == 0 || voittajaSelvillä(peliLauta) != ' ') {
                 break;
             }
-            if (tyhjätRuudut == 0) {
-                break;
-            }
+
         }
 
-        if (tyhjätRuudut == 0) {
-            System.out.println("Tasapeli");
+        char voittaja = voittajaSelvillä(peliLauta);
+
+        if (voittaja == 'X') {
+            System.out.println("*********************");
+            System.out.println("Pelin voitti pelaaja!");
+            System.out.println("*********************");
+
+        } else if (voittaja == 'O') {
+            System.out.println("***********************");
+            System.out.println("Pelin voitti tietokone!");
+            System.out.println("***********************");
+
         } else {
-            System.out.println("Pelin voitti " + pelinVoitti);
+            System.out.println("*******************");
+            System.out.println("Peli päättyi tasan!");
+            System.out.println("*******************");
         }
+        piirräLauta(peliLauta);
 
     }
 
